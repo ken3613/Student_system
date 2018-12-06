@@ -21,6 +21,6 @@ typedef struct studen
 	double score[10];
 	double avg;
 	int rank;
-}
+};
 
 #endif
