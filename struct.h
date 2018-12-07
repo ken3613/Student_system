@@ -21,6 +21,10 @@ typedef struct studen
 	double score[10];
 	double avg;
 	int rank;
-};
+}Student;
 
+enum sort_method
+{
+	UP,DOWN
+};
 #endif

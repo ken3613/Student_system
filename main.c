@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 #include "struct.h"
-
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-int inputCollegeInfo(char * filename,College x[]);
+#include "declare.h"
 int main(int argc, char *argv[]) {
+	system("chcp 65001");
+	system("cls");
 	int a;
 	College x[16];
 	a=inputCollegeInfo("C_Info1.txt",x);
+	sortCollegeInfoById(UP,x,a);
 	for(a=0;a<=9;a++)
 	{
 		printf("%d %s\n",x[a].id,x[a].name);

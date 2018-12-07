@@ -21,3 +21,50 @@ int inputCollegeInfo(char * filename,College x[])
 	}
 	return num;
 }
+
+void sortCollegeInfoById(enum sort_method method,College x[],int num)
+{
+	int i,j,flag;
+	College tmp;
+	switch(method)
+	{
+		case UP:
+			{
+				for(i=0;i<=num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;j<=num-1;j++)
+					{
+						if(x[j].id<x[flag].id)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=x[i];
+						x[i]=x[flag];
+						x[flag]=tmp;
+					}
+				}
+				break;
+			}
+		case DOWN:
+			{
+				for(i=0;i<=num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;j<=num-1;j++)
+					{
+						if(x[j].id>x[flag].id)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=x[i];
+						x[i]=x[flag];
+						x[flag]=tmp;
+					}
+				}
+				break;
+			}
+	}
+}
