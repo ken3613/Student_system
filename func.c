@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "struct.h"
+
 int inputCollegeInfo(char * filename,College x[])
 {
 	int num,i;
@@ -22,48 +24,13 @@ int inputCollegeInfo(char * filename,College x[])
 	return num;
 }
 
-void sortCollegeInfoById(enum sort_method method,College x[],int num)
+void menu(enum menu_type m_type)
 {
-	int i,j,flag;
-	College tmp;
-	switch(method)
+	switch(m_type)
 	{
-		case UP:
+		case MainMenu:
 			{
-				for(i=0;i<=num-1;i++)
-				{
-					flag=i;
-					for(j=i+1;j<=num-1;j++)
-					{
-						if(x[j].id<x[flag].id)
-							flag=j;
-					}
-					if(flag!=i)
-					{
-						tmp=x[i];
-						x[i]=x[flag];
-						x[flag]=tmp;
-					}
-				}
-				break;
-			}
-		case DOWN:
-			{
-				for(i=0;i<=num-1;i++)
-				{
-					flag=i;
-					for(j=i+1;j<=num-1;j++)
-					{
-						if(x[j].id>x[flag].id)
-							flag=j;
-					}
-					if(flag!=i)
-					{
-						tmp=x[i];
-						x[i]=x[flag];
-						x[flag]=tmp;
-					}
-				}
+				printf("请输入功能代码按回车确认：\n1.学院管理\n");
 				break;
 			}
 	}

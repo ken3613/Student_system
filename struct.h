@@ -27,4 +27,9 @@ enum sort_method
 {
 	UP,DOWN
 };
+
+enum menu_type
+{
+	MainMenu
+};
 #endif
