@@ -32,4 +32,11 @@ enum menu_type
 {
 	MainMenu
 };
+
+char const Main_str[][32]={
+"1.载入原始文件数据",
+"2.按学生姓名排序并输出",
+"3.按平均成绩排序，输出",
+"4.输出给定学院学生"
+};
 #endif

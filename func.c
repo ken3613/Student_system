@@ -127,15 +127,47 @@ int inputCollegeInfo(char * filename,College x[])
 	return num;
 }
 
+int inputStudentInfo(char * filename,Student x[])
+{
+	int num,i;
+	char tempstr[256];
+	FILE *fp;
+	if((fp=fopen(filename,"r"))==NULL)
+	{
+		printf("Can not open file.");
+		exit(1);
+	}
+	while((fscanf(fp,"%d",&num))==0)
+	{
+		fscanf(fp,"%s",tempstr);
+	}
+	for(i=0;i<=num;i++)
+	{
+		fscanf(fp,"%d %s %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",&x[i].id,x[i].name,&x[i].sid,&x[i].cid,&x[i].score[0],&x[i].score[1],&x[i].score[2],&x[i].score[3],&x[i].score[4],&x[i].score[5],&x[i].score[6],&x[i].score[7],&x[i].score[8],&x[i].score[9]);
+	}
+	
+}
+
 void menu(enum menu_type m_type)
 {
+	int i;
 	switch(m_type)
 	{
 		case MainMenu:
 			{
 				gotoxy(36,3);
 				print_table(50,'=');
-				
+				for(i=0;i<=3;i++)
+				{
+					gotoxy(36,i+4);
+					putchar('=');
+					putchar(' ');
+					puts(Main_str[i]);
+					gotoxy(85,i+4);
+					putchar('=');
+				}
+				gotoxy(36,7);
+				print_table(50,'=');
 				break;
 			}
 	}
@@ -162,7 +194,7 @@ void login()
 {
 	int check,i=0;
 	char c;
-	print_table(35,' ');
+    gotoxy(36,1);
 	print_table(50,'=');
 	putchar('\n');
 	print_table(35,' ');
