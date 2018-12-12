@@ -2,7 +2,37 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <windows.h>
 #include "struct.h"
+
+void print_table(int n,char c)
+{
+	int i;
+	for(i=0;i<=n-1;i++)
+		putchar(c);
+}
+
+int wherex()
+{
+    CONSOLE_SCREEN_BUFFER_INFO pBuffer;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &pBuffer);
+    return (pBuffer.dwCursorPosition.X+1);
+}
+
+int wherey()
+{
+    CONSOLE_SCREEN_BUFFER_INFO pBuffer;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &pBuffer);
+    return (pBuffer.dwCursorPosition.Y+1);
+}
+
+void gotoxy(int x,int y) 
+{
+    COORD c;
+    c.X=x-1;
+    c.Y=y-1;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),c);
+}
 
 static const char base64_alphabet[] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G',
@@ -103,7 +133,9 @@ void menu(enum menu_type m_type)
 	{
 		case MainMenu:
 			{
-				printf("请输入功能代码按回车确认：\n1.学院管理\n");
+				gotoxy(36,3);
+				print_table(50,'=');
+				
 				break;
 			}
 	}
@@ -116,7 +148,6 @@ int check_pwd(char * pwd)
 	fp=fopen("PASSWORD","r");
 	fscanf(fp,"%s",password);
 	base64_encode(pwd,strlen(pwd),b_pwd,NULL);
-	printf("%s\n",b_pwd);
 	if(strcmp(b_pwd,password)==0)
 	{
 		return 1;
@@ -129,17 +160,53 @@ int check_pwd(char * pwd)
 
 void login()
 {
-	int flag=0,check;
+	int check,i=0;
+	char c;
+	print_table(35,' ');
+	print_table(50,'=');
+	putchar('\n');
+	print_table(35,' ');
+	putchar('=');
+	gotoxy(85,2);
+	putchar('=');
+	gotoxy(1,3);;
+	print_table(35,' ');
+	print_table(50,'=');
+	gotoxy(37,2);
 	char pwd[16]={'\0'};
-	do
+	printf("请输入密码：");
+	while(i<=16)
 	{
-		if(flag)
-			printf("密码错误，请重新输入\n");
-		printf("请输入密码，按回车确认:");
-		flag=1;
-		scanf("%s",pwd);
-		check=check_pwd(pwd);
-	}while(!check);
-	printf("成功登录\n");
-	system("pause");
+		c=getch();
+		if(c>=33 && c<=122)
+		{
+			pwd[i]=c;
+			putch('*');
+			i++;
+		}
+		else if(c=='\b' && i>0)
+		{
+			pwd[i]='\0';
+			_cputs("\b \b");
+			i--;
+		}
+		else if(c=='\r' || c=='\n')
+		{
+			check=check_pwd(pwd);
+			if(!check)
+			{
+				system("cls");
+				gotoxy(58,2);
+				puts("密码错误！");
+				system("pause");
+				exit(1);
+			}
+			else
+			{
+				system("cls");
+				break;
+			}
+		}
+	}
 }
+
