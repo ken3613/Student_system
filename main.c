@@ -4,8 +4,41 @@
 #include "struct.h"
 #include "declare.h"
 int main(int argc, char *argv[]) {
-	system("mode con cols=120 lines=40");
+
+	unsigned int func_code;
+	int i,stu_num=0,col_num=0;
+	Student stus[100];
+	College cols[10];
+	system("mode con cols=120 lines=100");
 	login();
-	menu(MainMenu);
+	do
+	{
+		menu(MainMenu);
+		fflush(stdin);
+		scanf("%d",&func_code);
+		switch(func_code)
+		{
+			case 0:
+				{
+					break;
+				}
+			case 1:
+				{
+					stu_num=inputCollegeInfo("data\\C_Info1.txt",cols);
+					col_num=inputStudentInfo("data\\Stu_Info3.txt",stus);
+					if(stu_num!=0 && col_num!=0)
+					{
+						showMsg("文件读取成功！");
+					}
+					break;
+				}
+			case 2:
+				{
+					for(i=0;i<=99;i++) printf("%s\n",stus[i].name);
+					system("pause");
+					break;
+				}
+		}
+	}while(func_code!=0);
 	return 0;
 }

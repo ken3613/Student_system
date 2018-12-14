@@ -20,7 +20,6 @@ typedef struct studen
 	char name[16];
 	double score[10];
 	double avg;
-	int rank;
 }Student;
 
 enum sort_method
@@ -33,7 +32,7 @@ enum menu_type
 	MainMenu
 };
 
-char const Main_str[][32]={
+static char const main_str[][32]={
 "1.载入原始文件数据",
 "2.按学生姓名排序并输出",
 "3.按平均成绩排序，输出",

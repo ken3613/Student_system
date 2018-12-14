@@ -4,3 +4,5 @@ int check_pwd(char * pwd);
 int base64_encode(const char *indata, int inlen, char *outdata, int *outlen);
 static char cmove_bits(unsigned char src, unsigned lnum, unsigned rnum); 
 void print_table(int n,char c);
+void countAvg(Student x[],int num);
+void showMsg(char * msg);

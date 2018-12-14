@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "struct.h"
+#include "declare.h"
 
 void print_table(int n,char c)
 {
@@ -145,8 +146,24 @@ int inputStudentInfo(char * filename,Student x[])
 	{
 		fscanf(fp,"%d %s %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",&x[i].id,x[i].name,&x[i].sid,&x[i].cid,&x[i].score[0],&x[i].score[1],&x[i].score[2],&x[i].score[3],&x[i].score[4],&x[i].score[5],&x[i].score[6],&x[i].score[7],&x[i].score[8],&x[i].score[9]);
 	}
-	
+	countAvg(x,num);
 }
+
+void countAvg(Student x[],int num)
+{
+	int i,j;
+	double sum;
+	for(i=0;i<=num-1;i++)
+	{
+		sum=0;
+		for(j=0;j<=9;j++)
+		{
+			sum+=x[i].score[j];
+		}
+		x[i].avg=sum/10;
+	}
+}
+
 
 void menu(enum menu_type m_type)
 {
@@ -155,6 +172,7 @@ void menu(enum menu_type m_type)
 	{
 		case MainMenu:
 			{
+				system("cls");
 				gotoxy(36,3);
 				print_table(50,'=');
 				for(i=0;i<=3;i++)
@@ -162,12 +180,17 @@ void menu(enum menu_type m_type)
 					gotoxy(36,i+4);
 					putchar('=');
 					putchar(' ');
-					puts(Main_str[i]);
+					puts(main_str[i]);
 					gotoxy(85,i+4);
 					putchar('=');
 				}
-				gotoxy(36,7);
+				gotoxy(36,i+5);
 				print_table(50,'=');
+				gotoxy(85,i+4);
+				putchar('=');
+				gotoxy(36,i+4);
+				printf("= 请输入功能代码按回车确认：");
+				
 				break;
 			}
 	}
@@ -240,5 +263,20 @@ void login()
 			}
 		}
 	}
+	if(i>16)
+	{
+		system("cls");
+		gotoxy(58,2);
+		puts("密码错误！");
+		system("pause");
+		exit(1);
+	}
+}
+
+void showMsg(char * msg)
+{
+	system("cls");
+	puts(msg);
+	system("pause");
 }
 
