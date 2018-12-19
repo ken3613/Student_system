@@ -147,6 +147,28 @@ int inputStudentInfo(char * filename,Student x[])
 		fscanf(fp,"%d %s %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",&x[i].id,x[i].name,&x[i].sid,&x[i].cid,&x[i].score[0],&x[i].score[1],&x[i].score[2],&x[i].score[3],&x[i].score[4],&x[i].score[5],&x[i].score[6],&x[i].score[7],&x[i].score[8],&x[i].score[9]);
 	}
 	countAvg(x,num);
+	return num;
+}
+
+int inputSexInfo(char * filename,Sex x[])
+{
+	int num,i;
+	char tempstr[256];
+	FILE *fp;
+	if((fp=fopen(filename,"r"))==NULL)
+	{
+		printf("Can not open file.");
+		exit(1);
+	}
+	while((fscanf(fp,"%d",&num))==0)
+	{
+		fscanf(fp,"%s",tempstr);
+	}
+	for(i=0;i<=num-1;i++)
+	{
+		fscanf(fp,"%d %s",&x[i].id,x[i].name);
+	}
+	return num;
 }
 
 void countAvg(Student x[],int num)
@@ -164,6 +186,15 @@ void countAvg(Student x[],int num)
 	}
 }
 
+void print_stu(Student x[],int num)
+{
+	int i;
+	for(i=0;i<=num-1;i++)
+	{
+		printf("%d %s %s",x[i].id,sexs[x[i].sid].name,cols[x[i].cid].name);
+	} 
+}
+
 
 void menu(enum menu_type m_type)
 {
@@ -175,7 +206,7 @@ void menu(enum menu_type m_type)
 				system("cls");
 				gotoxy(36,3);
 				print_table(50,'=');
-				for(i=0;i<=3;i++)
+				for(i=0;i<=4;i++)
 				{
 					gotoxy(36,i+4);
 					putchar('=');

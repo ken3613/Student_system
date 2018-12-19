@@ -4,11 +4,8 @@
 #include "struct.h"
 #include "declare.h"
 int main(int argc, char *argv[]) {
-
 	unsigned int func_code;
-	int i,stu_num=0,col_num=0;
-	Student stus[100];
-	College cols[10];
+	int i,stu_num=0,col_num=0,sex_num=0;
 	system("mode con cols=120 lines=100");
 	login();
 	do
@@ -20,13 +17,14 @@ int main(int argc, char *argv[]) {
 		{
 			case 0:
 				{
-					break;
+					exit(0); 
 				}
 			case 1:
 				{
 					stu_num=inputCollegeInfo("data\\C_Info1.txt",cols);
 					col_num=inputStudentInfo("data\\Stu_Info3.txt",stus);
-					if(stu_num!=0 && col_num!=0)
+					sex_num=inputSexInfo("data\\S_Info2.txt",sexs);
+					if(stu_num!=0 && col_num!=0 && sex_num!=0)
 					{
 						showMsg("文件读取成功！");
 					}
@@ -39,6 +37,6 @@ int main(int argc, char *argv[]) {
 					break;
 				}
 		}
-	}while(func_code!=0);
+	}while(1);
 	return 0;
 }

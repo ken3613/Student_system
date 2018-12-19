@@ -1,4 +1,6 @@
 int inputCollegeInfo(char * filename,College x[]);
+int inputSexInfo(char * filename,Sex x[]);
+int inputStudentInfo(char * filename,Student x[]);
 void menu(enum menu_type m_type);
 int check_pwd(char * pwd);
 int base64_encode(const char *indata, int inlen, char *outdata, int *outlen);
