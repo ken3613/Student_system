@@ -29,7 +29,7 @@ enum sort_method
 
 enum menu_type
 {
-	MainMenu
+	MainMenu,CollegeMenu
 };
 
 static char const main_str[][32]={
@@ -40,7 +40,4 @@ static char const main_str[][32]={
 "0.ÍË³öÏµÍ³"
 };
 
-static Student stus[100];
-static College cols[10];
-static Sex sexs[3];
 #endif

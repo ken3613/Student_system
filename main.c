@@ -3,11 +3,17 @@
 #include <conio.h>
 #include "struct.h"
 #include "declare.h"
+
+Student stus[100];
+College cols[10];
+Sex sexs[3];
+int stu_num=0,col_num=0,sex_num=0;
+
 int main(int argc, char *argv[]) {
 	unsigned int func_code;
-	int i,stu_num=0,col_num=0,sex_num=0;
+	int i;
 	system("mode con cols=120 lines=100");
-	login();
+	//login();
 	do
 	{
 		menu(MainMenu);
@@ -21,8 +27,8 @@ int main(int argc, char *argv[]) {
 				}
 			case 1:
 				{
-					stu_num=inputCollegeInfo("data\\C_Info1.txt",cols);
-					col_num=inputStudentInfo("data\\Stu_Info3.txt",stus);
+					col_num=inputCollegeInfo("data\\C_Info1.txt",cols);
+					stu_num=inputStudentInfo("data\\Stu_Info3.txt",stus);
 					sex_num=inputSexInfo("data\\S_Info2.txt",sexs);
 					if(stu_num!=0 && col_num!=0 && sex_num!=0)
 					{
@@ -32,8 +38,17 @@ int main(int argc, char *argv[]) {
 				}
 			case 2:
 				{
-					for(i=0;i<=99;i++) printf("%s\n",stus[i].name);
-					system("pause");
+					menu(CollegeMenu);
+					fflush(stdin);
+					scanf("%d",&func_code);
+					break;
+				}
+			case 4:
+				{
+					menu(CollegeMenu);
+					fflush(stdin);
+					scanf("%d",&func_code);
+					
 					break;
 				}
 		}

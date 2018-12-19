@@ -6,6 +6,11 @@
 #include "struct.h"
 #include "declare.h"
 
+extern Student stus[100];
+extern College cols[10];
+extern Sex sexs[3];
+extern int stu_num,col_num,sex_num;
+
 void print_table(int n,char c)
 {
 	int i;
@@ -186,15 +191,71 @@ void countAvg(Student x[],int num)
 	}
 }
 
-void print_stu(Student x[],int num)
+void print_stu(int num)
 {
 	int i;
 	for(i=0;i<=num-1;i++)
 	{
-		printf("%d %s %s",x[i].id,sexs[x[i].sid].name,cols[x[i].cid].name);
+		printf("%d %s %s",stus[i].id,sexs[stus[i].sid].name,cols[stus[i].cid].name);
 	} 
 }
 
+void print_studentByIndex(int index)
+{
+	printf("%d %s %s",stus[index].id,sexs[stus[index].sid].name,cols[stus[index].cid].name);
+}
+
+void print_studentByCollegeId(int cid)
+{
+	
+}
+
+void sort_studentByName(enum sort_method method)
+{
+	int i,j,flag;
+	Student tmp;
+	switch(method)
+	{
+		case UP:
+			{
+				for(i=0;i<=stu_num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;i<=stu_num-1;j++)
+					{
+						if(strcmp(stus[j].name,stus[flag].name)<0)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=stus[i];
+						stus[i]=stus[flag];
+						stus[flag]=tmp;
+					}
+				}
+				break;
+			}
+		case DOWN:
+			{
+				for(i=0;i<=stu_num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;i<=stu_num-1;j++)
+					{
+						if(strcmp(stus[j].name,stus[flag].name)>0)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=stus[i];
+						stus[i]=stus[flag];
+						stus[flag]=tmp;
+					}
+				}
+				break;
+			}
+	}
+}
 
 void menu(enum menu_type m_type)
 {
@@ -223,6 +284,25 @@ void menu(enum menu_type m_type)
 				printf("= 请输入功能代码按回车确认：");
 				
 				break;
+			}
+		case CollegeMenu:
+			{
+				system("cls");
+				gotoxy(36,3);
+				print_table(50,'=');
+				for(i=0;i<=col_num-1;i++)
+				{
+					gotoxy(36,i+4);
+					printf("= %d.%s",cols[i].id,cols[i].name);
+					gotoxy(85,i+4);
+					putchar('=');
+				}
+				gotoxy(36,i+5);
+				print_table(50,'=');
+				gotoxy(85,i+4);
+				putchar('=');
+				gotoxy(36,i+4);
+				printf("= 请输入学院代码按回车确认：");
 			}
 	}
 }
