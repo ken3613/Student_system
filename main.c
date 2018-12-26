@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <windows.h>
 #include "struct.h"
 #include "declare.h"
 
@@ -12,6 +13,7 @@ int stu_num=0,col_num=0,sex_num=0;
 int main(int argc, char *argv[]) {
 	unsigned int func_code;
 	int i;
+	char stmp[20];
 	system("mode con cols=120 lines=100");
 	//login();
 	do
@@ -38,17 +40,48 @@ int main(int argc, char *argv[]) {
 				}
 			case 2:
 				{
-					menu(CollegeMenu);
-					fflush(stdin);
+					system("mode con lines=120");
+					system("cls");
+					printf("0.升序\n1.降序\n请输入排序方法按回车确认：");
 					scanf("%d",&func_code);
+					sort_studentByName(func_code);
+					print_stu();
+					system("pause");
+					system("mode con cols=120 lines=100");
+					break;
+				}
+			case 3:
+				{
+					system("mode con lines=120");
+					system("cls");
+					printf("0.升序\n1.降序\n请输入排序方法按回车确认：");
+					scanf("%d",&func_code);
+					sort_studentByAvg(func_code);
+					print_stu();
+					system("pause");
+					system("mode con cols=120 lines=100");
 					break;
 				}
 			case 4:
 				{
+					system("mode con lines=120");
 					menu(CollegeMenu);
 					fflush(stdin);
 					scanf("%d",&func_code);
-					
+					print_studentByCollegeId(func_code);
+					system("pause");
+					system("mode con cols=120 lines=100");
+					break;
+				}
+			case 6:
+				{
+					system("mode con lines=120");
+					system("cls");
+					printf("请输入学生姓名按回车确认：");
+					scanf("%s",stmp);
+					print_studentByName(stmp);
+					system("pause");
+					system("mode con cols=120 lines=100");
 					break;
 				}
 		}

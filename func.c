@@ -191,13 +191,14 @@ void countAvg(Student x[],int num)
 	}
 }
 
-void print_stu(int num)
+void print_stu()
 {
 	int i;
-	for(i=0;i<=num-1;i++)
+	printf("学号   姓名   性别\t学院\t\t科目一 科目二 科目三 科目四 科目五 科目六 科目七 科目八 科目九 科目十 平均分\n");
+	for(i=0;i<=stu_num-1;i++)
 	{
-		printf("%d %s %s",stus[i].id,sexs[stus[i].sid].name,cols[stus[i].cid].name);
-	} 
+		printf("%d %s %s\t%-10s\t%6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf\n",stus[i].id,stus[i].name,sexs[stus[i].sid].name,cols[stus[i].cid-1].name,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9],stus[i].avg);
+	}
 }
 
 void print_studentByIndex(int index)
@@ -207,7 +208,75 @@ void print_studentByIndex(int index)
 
 void print_studentByCollegeId(int cid)
 {
-	
+	int i;
+	printf("学号   姓名   性别\t学院\t\t科目一 科目二 科目三 科目四 科目五 科目六 科目七 科目八 科目九 科目十 平均分\n");
+	for(i=0;i<=stu_num-1;i++)
+	{
+		if(stus[i].cid==cid)
+		{
+			printf("%d %s %s\t%-10s\t%6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf\n",stus[i].id,stus[i].name,sexs[stus[i].sid].name,cols[stus[i].cid-1].name,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9],stus[i].avg);
+		}
+	}	
+}
+
+void print_studentByName(char * name)
+{
+	int i;
+	printf("学号   姓名   性别\t学院\t\t科目一 科目二 科目三 科目四 科目五 科目六 科目七 科目八 科目九 科目十 平均分\n");
+	for(i=0;i<=stu_num-1;i++)
+	{
+		if(strcmp(stus[i].name,name)==0)
+		{
+			printf("%d %s %s\t%-10s\t%6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf\n",stus[i].id,stus[i].name,sexs[stus[i].sid].name,cols[stus[i].cid-1].name,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9],stus[i].avg);
+		}
+	}
+}
+
+void sort_studentByAvg(enum sort_method method)
+{
+	int i,j,flag;
+	Student tmp;
+		switch(method)
+	{
+		case UP:
+			{
+				for(i=0;i<=stu_num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;j<=stu_num-1;j++)
+					{
+						if(stus[j].avg<stus[flag].avg)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=stus[i];
+						stus[i]=stus[flag];
+						stus[flag]=tmp;
+					}
+				}
+				break;
+			}
+		case DOWN:
+			{
+				for(i=0;i<=stu_num-1;i++)
+				{
+					flag=i;
+					for(j=i+1;j<=stu_num-1;j++)
+					{
+						if(stus[j].avg>stus[flag].avg)
+							flag=j;
+					}
+					if(flag!=i)
+					{
+						tmp=stus[i];
+						stus[i]=stus[flag];
+						stus[flag]=tmp;
+					}
+				}
+				break;
+			}
+	}
 }
 
 void sort_studentByName(enum sort_method method)
@@ -221,7 +290,7 @@ void sort_studentByName(enum sort_method method)
 				for(i=0;i<=stu_num-1;i++)
 				{
 					flag=i;
-					for(j=i+1;i<=stu_num-1;j++)
+					for(j=i+1;j<=stu_num-1;j++)
 					{
 						if(strcmp(stus[j].name,stus[flag].name)<0)
 							flag=j;
@@ -240,7 +309,7 @@ void sort_studentByName(enum sort_method method)
 				for(i=0;i<=stu_num-1;i++)
 				{
 					flag=i;
-					for(j=i+1;i<=stu_num-1;j++)
+					for(j=i+1;j<=stu_num-1;j++)
 					{
 						if(strcmp(stus[j].name,stus[flag].name)>0)
 							flag=j;
