@@ -130,6 +130,7 @@ int inputCollegeInfo(char * filename,College x[])
 	{
 		fscanf(fp,"%d %s",&x[i].id,x[i].name);
 	}
+	fclose(fp);
 	return num;
 }
 
@@ -152,6 +153,7 @@ int inputStudentInfo(char * filename,Student x[])
 		fscanf(fp,"%d %s %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",&x[i].id,x[i].name,&x[i].sid,&x[i].cid,&x[i].score[0],&x[i].score[1],&x[i].score[2],&x[i].score[3],&x[i].score[4],&x[i].score[5],&x[i].score[6],&x[i].score[7],&x[i].score[8],&x[i].score[9]);
 	}
 	countAvg(x,num);
+	fclose(fp);
 	return num;
 }
 
@@ -173,6 +175,7 @@ int inputSexInfo(char * filename,Sex x[])
 	{
 		fscanf(fp,"%d %s",&x[i].id,x[i].name);
 	}
+	fclose(fp);
 	return num;
 }
 
@@ -201,9 +204,122 @@ void print_stu()
 	}
 }
 
-void print_studentByIndex(int index)
+void print_studentById(int id)
 {
-	printf("%d %s %s",stus[index].id,sexs[stus[index].sid].name,cols[stus[index].cid].name);
+	int i;
+	printf("学号   姓名   性别\t学院\t\t科目一 科目二 科目三 科目四 科目五 科目六 科目七 科目八 科目九 科目十 平均分\n");
+	for(i=0;i<=stu_num-1;i++)
+	{
+		if(stus[i].id==id)
+		{
+			printf("%d %s %s\t%-10s\t%6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf %6.2lf\n",stus[i].id,stus[i].name,sexs[stus[i].sid].name,cols[stus[i].cid-1].name,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9],stus[i].avg);
+		}
+	}
+}
+
+int find_studentIndexById(int id)
+{
+	int i;
+	for(i=0;i<=stu_num-1;i++)
+	{
+		if(stus[i].id==id)
+		{
+			return i;
+		}
+	}	
+}
+
+void changeId(int id,int nid)
+{
+	int i,index;
+	FILE *fp;
+	for(i=0;i<=stu_num-1;i++)
+	{
+		if(stus[i].id==nid)
+		{
+			showMsg("学号重复！修改失败！");
+			return;
+		}
+	}
+	index=find_studentIndexById(id);
+	stus[index].id=nid;
+	fp=fopen("data\\Stu_Info3.txt","w");
+	fprintf(fp,"#开头为注释。注释后的第一行为学生数\n#注释后的第二行开始\n#学号,姓名,性别,学院和10门成绩\n%d\n",stu_num);
+	for(i=0;i<=stu_num-1;i++)
+	{
+		fprintf(fp,"%d %s %d %d %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf\n",stus[i].id,stus[i].name,stus[i].sid,stus[i].cid,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9]);	
+	}
+	fclose(fp);
+	inputStudentInfo("data\\Stu_Info3.txt",stus);
+	showMsg("修改成功！");
+}
+
+void changeName(int id,char * nname)
+{
+	int index,i;
+	FILE *fp;
+	index=find_studentIndexById(id);
+	strcpy(stus[index].name,nname);
+	fp=fopen("data\\Stu_Info3.txt","w");
+	fprintf(fp,"#开头为注释。注释后的第一行为学生数\n#注释后的第二行开始\n#学号,姓名,性别,学院和10门成绩\n%d\n",stu_num);
+	for(i=0;i<=stu_num-1;i++)
+	{
+		fprintf(fp,"%d %s %d %d %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf\n",stus[i].id,stus[i].name,stus[i].sid,stus[i].cid,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9]);	
+	}
+	fclose(fp);
+	inputStudentInfo("data\\Stu_Info3.txt",stus);
+	showMsg("修改成功！");
+}
+
+void changeSex(int id,int nsid)
+{
+	int index,i;
+	FILE *fp;
+	index=find_studentIndexById(id);
+	stus[index].sid=nsid;
+	fp=fopen("data\\Stu_Info3.txt","w");
+	fprintf(fp,"#开头为注释。注释后的第一行为学生数\n#注释后的第二行开始\n#学号,姓名,性别,学院和10门成绩\n%d\n",stu_num);
+	for(i=0;i<=stu_num-1;i++)
+	{
+		fprintf(fp,"%d %s %d %d %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf\n",stus[i].id,stus[i].name,stus[i].sid,stus[i].cid,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9]);	
+	}
+	fclose(fp);
+	inputStudentInfo("data\\Stu_Info3.txt",stus);
+	showMsg("修改成功！");
+}
+
+void changeCollege(int id,int ncol)
+{
+	int index,i;
+	FILE *fp;
+	index=find_studentIndexById(id);
+	stus[index].cid=ncol;
+	fp=fopen("data\\Stu_Info3.txt","w");
+	fprintf(fp,"#开头为注释。注释后的第一行为学生数\n#注释后的第二行开始\n#学号,姓名,性别,学院和10门成绩\n%d\n",stu_num);
+	for(i=0;i<=stu_num-1;i++)
+	{
+		fprintf(fp,"%d %s %d %d %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf\n",stus[i].id,stus[i].name,stus[i].sid,stus[i].cid,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9]);	
+	}
+	fclose(fp);
+	inputStudentInfo("data\\Stu_Info3.txt",stus);
+	showMsg("修改成功！");
+}
+
+void changeScore(int id,int sid,int nscore)
+{
+	int index,i;
+	FILE *fp;
+	index=find_studentIndexById(id);
+	stus[index].score[sid-1]=nscore;
+	fp=fopen("data\\Stu_Info3.txt","w");
+	fprintf(fp,"#开头为注释。注释后的第一行为学生数\n#注释后的第二行开始\n#学号,姓名,性别,学院和10门成绩\n%d\n",stu_num);
+	for(i=0;i<=stu_num-1;i++)
+	{
+		fprintf(fp,"%d %s %d %d %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf %.0lf\n",stus[i].id,stus[i].name,stus[i].sid,stus[i].cid,stus[i].score[0],stus[i].score[1],stus[i].score[2],stus[i].score[3],stus[i].score[4],stus[i].score[5],stus[i].score[6],stus[i].score[7],stus[i].score[8],stus[i].score[9]);	
+	}
+	fclose(fp);
+	inputStudentInfo("data\\Stu_Info3.txt",stus);
+	showMsg("修改成功！");
 }
 
 void print_studentByCollegeId(int cid)
@@ -336,7 +452,7 @@ void menu(enum menu_type m_type)
 				system("cls");
 				gotoxy(36,3);
 				print_table(50,'=');
-				for(i=0;i<=4;i++)
+				for(i=0;i<=6;i++)
 				{
 					gotoxy(36,i+4);
 					putchar('=');
@@ -383,6 +499,7 @@ int check_pwd(char * pwd)
 	fp=fopen("PASSWORD","r");
 	fscanf(fp,"%s",password);
 	base64_encode(pwd,strlen(pwd),b_pwd,NULL);
+	fclose(fp);
 	if(strcmp(b_pwd,password)==0)
 	{
 		return 1;
@@ -393,7 +510,7 @@ int check_pwd(char * pwd)
 	}
 }
 
-void login()
+int login()
 {
 	int check,i=0;
 	char c;
@@ -434,12 +551,12 @@ void login()
 				gotoxy(58,2);
 				puts("密码错误！");
 				system("pause");
-				exit(1);
+				return 0;
 			}
 			else
 			{
 				system("cls");
-				break;
+				return 1;
 			}
 		}
 	}
@@ -449,7 +566,41 @@ void login()
 		gotoxy(58,2);
 		puts("密码错误！");
 		system("pause");
-		exit(1);
+		return 0;
+	}
+}
+
+void changePwd()
+{
+	FILE *fp;
+	int i=0;
+	char c,pwd[16]={'\0'},b64pwd[32]={'\0'};
+	while(i<=16)
+	{
+		c=getch();
+		if(c>=33 && c<=122)
+		{
+			pwd[i]=c;
+			putch('*');
+			i++;
+		}
+		else if(c=='\b' && i>0)
+		{
+			pwd[i]='\0';
+			_cputs("\b \b");
+			i--;
+		}
+		else if(c=='\r' || c=='\n')
+		{
+			putch('\n');
+			fp=fopen("PASSWORD","w");
+			base64_encode(pwd,strlen(pwd),b64pwd,NULL);
+			fprintf(fp,"%s",b64pwd);
+			fclose(fp);
+			printf("修改密码成功！\n");
+			system("pause");
+			break;
+		}
 	}
 }
 
