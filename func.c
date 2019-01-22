@@ -10,6 +10,7 @@ extern Student stus[100];
 extern College cols[10];
 extern Sex sexs[3];
 extern int stu_num,col_num,sex_num;
+extern const char base64_alphabet[64];
 
 void print_table(int n,char c)
 {
@@ -39,27 +40,16 @@ void gotoxy(int x,int y)
     c.Y=y-1;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),c);
 }
-
-static const char base64_alphabet[] = {
-    'A', 'B', 'C', 'D', 'E', 'F', 'G',
-    'H', 'I', 'J', 'K', 'L', 'M', 'N',
-    'O', 'P', 'Q', 'R', 'S', 'T',
-    'U', 'V', 'W', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g',
-    'h', 'i', 'j', 'k', 'l', 'm', 'n',
-    'o', 'p', 'q', 'r', 's', 't',
-    'u', 'v', 'w', 'x', 'y', 'z',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    '+', '/'};
     
-static char cmove_bits(unsigned char src, unsigned lnum, unsigned rnum) 
-	{
+char cmove_bits(unsigned char src, unsigned lnum, unsigned rnum) 
+{
     src <<= lnum; // src = src << lnum;
     src >>= rnum; // src = src >> rnum;
     return src;
-	}
+}
 
-int base64_encode(const char *indata, int inlen, char *outdata, int *outlen) {
+int base64_encode(const char *indata, int inlen, char *outdata, int *outlen) 
+{
     
     int ret = 0,i; // return value
     if (indata == NULL || inlen == 0) {
@@ -452,7 +442,7 @@ void menu(enum menu_type m_type)
 				system("cls");
 				gotoxy(36,3);
 				print_table(50,'=');
-				for(i=0;i<=6;i++)
+				for(i=0;i<=7;i++)
 				{
 					gotoxy(36,i+4);
 					putchar('=');
